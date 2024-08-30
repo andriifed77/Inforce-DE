@@ -1,0 +1,33 @@
+-- 1st query
+SELECT COUNT(user_id), 
+	signup_date
+FROM users
+GROUP BY signup_date
+ORDER BY signup_date;
+
+-- 2st query
+SELECT DISTINCT domain
+FROM users;
+
+-- 3st query
+SELECT *
+FROM users
+WHERE CURRENT_DATE-signup_date<7 AND CURRENT_DATE-signup_date>=0;
+
+-- 4st query
+SELECT *
+FROM users
+WHERE domain=(SELECT domain
+	  FROM (SELECT COUNT(user_id), domain
+	  FROM users
+      GROUP BY domain
+	  ORDER BY 1 DESC
+	  LIMIT 1) as max_cnt)
+
+-- 5st query
+DELETE FROM users
+WHERE domain NOT LIKE 'example.com';
+
+SELECT *
+FROM users
+WHERE domain LIKE 'example.com'
